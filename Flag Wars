@@ -1,0 +1,186 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "ZRIX HUBBBBBBBBBBBBBBBBBEZEZ", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Tab = Window:MakeTab({
+	Name = "Tab 1",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "Section"
+})
+
+FireModee = {"Semiautomatic","automatic"}
+Weapon = {}
+
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+    table.insert(Weapon,v.Name)
+end
+
+Tab:AddDropdown({
+	Name = "Fire Mode",
+	Default = "1",
+	Options = FireModee,
+	Callback = function(Value)
+		FireMdd = Value
+	end    
+})
+
+Tab:AddDropdown({
+	Name = "Tool For KillAll",
+	Default = "1",
+	Options = Weapon,
+	Callback = function(Value)
+		Wapon = Value
+	end    
+})
+
+
+Tab:AddToggle({
+	Name = "Fire Mode [Holding!]",
+	Default = false,
+	Callback = function(Value)
+    _G.Tog1 = Value
+end
+})
+
+
+Tab:AddToggle({
+	Name = "100K HitDamage [Holding!]",
+	Default = false,
+	Callback = function(Value)
+    _G.Tog2 = Value
+end
+})
+
+Tab:AddToggle({
+	Name = "No Recoin [Holding!]",
+	Default = false,
+	Callback = function(Value)
+    _G.Tog3 = Value
+end
+})
+
+
+Tab:AddToggle({
+	Name = "100K HeadShotDamage [Holding!]",
+	Default = false,
+	Callback = function(Value)
+        _G.Tog4 = Value
+    end
+})
+
+Tab:AddToggle({
+	Name = "Kill All [DropDown]",
+	Default = false,
+	Callback = function(Value)
+        _G.Tog5 = Value
+    end
+})
+
+
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Tog1 then
+                repeat task.wait()
+                    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v.ClassName == "Tool" then
+                            v.Configuration.FireMode.Value = FireMdd
+                        end
+                    end
+                until _G.Tog == false
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Tog2 then
+                repeat task.wait()
+                    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v.ClassName == "Tool" then
+                            v.Configuration.HitDamage.Value = 100000
+                        end
+                    end
+                until _G.Tog2 == false
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Tog3 then
+                repeat task.wait()
+                    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v.ClassName == "Tool" then
+                            pcall(function()
+                            v.Configuration.RecoilDecay.Value = 0
+                            v.Configuration.RecoilMax.Value = 0
+                            v.Configuration.RecoilMin.Value = 0
+                            v.Configuration.ShotCooldown.Value = 0
+                            v.Configuration.GravityFactor.Value = 0
+                            v.CurrentAmmo.Value = 100
+                            end)
+                        end
+                    end
+                until _G.Tog3 == false
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Tog4 then
+                repeat task.wait()
+                    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v.ClassName == "Tool" then
+                            v.Configuration.HeadshotDamage.Value = 100000
+                            v.Configuration.HeadshotCooldown.Value = 0
+                        end
+                    end
+                until _G.Tog4 == false
+            end
+        end
+    end)
+end)
+
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Tog5 then
+                repeat task.wait()
+                    pcall(function()
+                        for i,v in next,(game:GetService("Players"):GetPlayers()) do
+                            if v.Name ~= game.Players.LocalPlayer.Name then
+                                local args = {
+                                    [1] = game:GetService("Players").LocalPlayer.Character[Wapon],
+                                    [2] = {
+                                        ["p"] = Vector3.new(1035.6417236328125, 4.132330894470215, 160.36985778808594),
+                                        ["pid"] = 1,
+                                        ["part"] = v.Character.HumanoidRootPart,
+                                        ["d"] = 20.293737411499023,
+                                        ["maxDist"] = 20.290163040161133,
+                                        ["h"] = v.Character.Humanoid,
+                                        ["m"] = Enum.Material.SmoothPlastic,
+                                        ["n"] = Vector3.new(-0.011273860931396484, -0.5117526054382324, -0.8590588569641113),
+                                        ["t"] = 0.37528630299181764,
+                                        ["sid"] = 1
+                                    }
+                                }
+                                game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
+                            end
+                        end
+                    end)
+                until _G.Tog5 == false
+            end
+        end
+    end)
+end)
